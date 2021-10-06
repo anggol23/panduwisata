@@ -2,6 +2,7 @@ package config
 
 import (
 	"context"
+	"fmt"
 	"mini-project/model"
 	"time"
 
@@ -13,15 +14,39 @@ import (
 )
 
 var DB *gorm.DB
+
 var DBLog *mongo.Client
 
+type ConfigDB struct {
+	DB_Username string
+	DB_Password string
+	DB_Host     string
+	DB_Port     string
+	DB_Name     string
+}
+
 func InitDB() {
-	dsn := "root:anggol2332prada@tcp(127.0.0.1:3306)/pandu-wisata?charset-utf8mb4&parseTime=True&loc=Local"
-	var err error
-	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
-	if err != nil {
-		panic(err)
+	config := map[string]string{
+		"DB_Username": "root",
+		"DB_Password": "anggol2332prada",
+		"DB_Port":     "3306",
+		"DB_Host":     "localhost",
+		"DB_Name":     "pandu-wisata",
 	}
+
+	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		config["DB_Username"],
+		config["DB_Password"],
+		config["DB_Host"],
+		config["DB_Port"],
+		config["DB_Name"])
+
+	var e error
+	DB, e = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
+	if e != nil {
+		panic(e)
+	}
+	InitMigration()
 }
 
 func InitLog() {
@@ -31,7 +56,8 @@ func InitLog() {
 		panic(err)
 	}
 
-	ctx, _ := context.WithTimeout(context.Background(), 1*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 1*time.Second)
+	defer cancel()
 	err = DBLog.Connect(ctx)
 	if err != nil {
 		panic(err)
