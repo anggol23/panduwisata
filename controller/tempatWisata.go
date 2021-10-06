@@ -5,7 +5,6 @@ import (
 	"mini-project/model"
 	"net/http"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/labstack/echo"
 )
 
@@ -75,17 +74,16 @@ func GetAllTempatWisata(c echo.Context) error {
 
 func CreateTempatWisata(c echo.Context) error {
 	var NewTempatWisata model.TempatWisata
-	u := c.Get("user")
-	claims := u.(jwt.MapClaims)
-	userID := claims["userId"].(float64)
+	// u := c.Get("user")
+	// claims := u.(jwt.MapClaims)
+	// userID := claims["userId"].(float64)
 	if err := c.Bind(&NewTempatWisata); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
 			"message": "CreateTempatWisataController",
 			"error":   err.Error(),
 		})
 	}
-	NewTempatWisata.UserID = uint(userID)
-	NewTempatWisata = database.CreateTempatWisata(NewTempatWisata)
+	database.CreateTempatWisata(NewTempatWisata)
 	return c.JSON(http.StatusOK, echo.Map{
 		"message": "CreateTempatWisataController",
 		"data":    NewTempatWisata,

@@ -8,5 +8,5 @@ type Transaction struct {
 	UserID         uint          `json:"user_id"`
 	User           *User         `json:"user"`
 	TempatWisataID uint          `json:"tempatwisata_id,"`
-	TempatWisata   *TempatWisata `json:"tempatwisata,omitempty"`
+	TempatWisata   *TempatWisata `json:"tempatwisata"`
 }

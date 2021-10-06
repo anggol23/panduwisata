@@ -18,20 +18,6 @@ import (
 
 // 	return p == user.Password
 // }
-func IsValid(u string, p string) (model.User, error) {
-	var user model.User
-	if err := config.DB.Where("email = ?", u).Find(&user).Error; err != nil {
-		// fmt.Println(err)
-		return model.User{}, err
-
-	}
-	if user.Password != p {
-		return model.User{}, errors.New("email or password incorrect")
-	}
-
-	return user, nil
-}
-
 // func GetAllUser() []model.User {
 // 	var user []model.User
 // 	config.DB.Find(&user)
@@ -76,4 +62,18 @@ func CreateUser(user model.User) model.User {
 func UpdateUser(id string, user model.User) model.User {
 	config.DB.Where("id = ?", id).Updates(&user)
 	return user
+}
+
+func IsValid(u string, p string) (model.User, error) {
+	var user model.User
+	if err := config.DB.Where("email = ?", u).Find(&user).Error; err != nil {
+		// fmt.Println(err)
+		return model.User{}, err
+
+	}
+	if user.Password != p {
+		return model.User{}, errors.New("email or password incorrect")
+	}
+
+	return user, nil
 }

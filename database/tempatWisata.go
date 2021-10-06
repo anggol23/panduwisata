@@ -37,12 +37,12 @@ func GetAllTempatWisata() []model.TempatWisata {
 
 func GetTempatWisataByID(id string) model.TempatWisata {
 	var tempatWisata model.TempatWisata
-	config.DB.Where("id = ?", id).Find(&tempatWisata).Joins("Category")
+	config.DB.Where("id = ?", id).Preload("Category").Find(&tempatWisata)
 	return tempatWisata
 }
 
 func CreateTempatWisata(tempatWisata model.TempatWisata) model.TempatWisata {
-	config.DB.Create(&tempatWisata).Joins("Category")
+	config.DB.Create(&tempatWisata).Joins("Category").Find(&tempatWisata)
 	return tempatWisata
 }
 func DeleteTempatWisataByID(id string) {

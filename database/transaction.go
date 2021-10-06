@@ -32,19 +32,19 @@ import (
 
 func GetAllTransaction() []model.Transaction {
 	var transaction []model.Transaction
-	config.DB.Find(&transaction).Joins("User", "TempatWisata")
+	config.DB.Find(&transaction)
 	return transaction
 }
 
 func GetTransactionByID(id string) model.Transaction {
 	var transaction model.Transaction
-	config.DB.Where("id = ?", id).Find(&transaction).Joins("TempatWisata")
+	config.DB.Where("id = ?", id).Preload("User").Preload("TempatWisata.Category").Find(&transaction)
 	return transaction
 }
 
 func CreateTransaction(transaction model.Transaction) model.Transaction {
 	config.DB.Create(&transaction)
-	config.DB.Where("transaction.id = ?", transaction.ID).Joins("TempatWisata").Find(&transaction)
+	config.DB.Where("transactions.id = ?", transaction.ID).Joins("TempatWisata").Joins("User").Find(&transaction)
 	return transaction
 }
 

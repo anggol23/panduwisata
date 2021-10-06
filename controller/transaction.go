@@ -80,7 +80,7 @@ func CreateTransaction(c echo.Context) error {
 	userID := claims["userId"].(float64)
 	if err := c.Bind(&newTransaction); err != nil {
 		return c.JSON(http.StatusOK, echo.Map{
-			"message": "CreateTransactionController",
+			"message": "Transaction succes",
 			"error":   err.Error(),
 		})
 	}
@@ -112,7 +112,7 @@ func GetTransactionByID(c echo.Context) error {
 	id := c.Param("id")
 	transaction := database.GetTransactionByID(id)
 	return c.JSON(http.StatusOK, echo.Map{
-		"message": "GetTransactionByIDController",
+		"message": "Transaction Succes",
 		"data":    transaction,
 	})
 }
