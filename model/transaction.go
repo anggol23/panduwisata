@@ -2,6 +2,8 @@ package model
 
 import "gorm.io/gorm"
 
+// import "gorm.io/gorm"
+
 type Transaction struct {
 	gorm.Model
 	ID             uint          `gorm:"primaryKey"`

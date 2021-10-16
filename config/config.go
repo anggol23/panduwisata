@@ -2,7 +2,6 @@ package config
 
 import (
 	"context"
-	"fmt"
 	"mini-project/model"
 	"time"
 
@@ -11,43 +10,61 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	// "context"
+	// "fmt"
+	// "mini-project/model"
+	// "time"
+	// "go.mongodb.org/mongo-driver/bson"
+	// "go.mongodb.org/mongo-driver/mongo"
+	// "go.mongodb.org/mongo-driver/mongo/options"
+	// "gorm.io/driver/mysql"
+	// "gorm.io/gorm"
 )
 
 var DB *gorm.DB
 
 var DBLog *mongo.Client
 
-type ConfigDB struct {
-	DB_Username string
-	DB_Password string
-	DB_Host     string
-	DB_Port     string
-	DB_Name     string
-}
-
 func InitDB() {
-	config := map[string]string{
-		"DB_Username": "root",
-		"DB_Password": "anggol2332prada",
-		"DB_Port":     "3306",
-		"DB_Host":     "localhost",
-		"DB_Name":     "pandu-wisata",
+	dsn := "root:anggol2332prada@tcp(127.0.0.1:3306)/pandu-wisata?charset-utf8mb4&parseTime=True&loc=Local"
+	var err error
+	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic(err)
 	}
-
-	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		config["DB_Username"],
-		config["DB_Password"],
-		config["DB_Host"],
-		config["DB_Port"],
-		config["DB_Name"])
-
-	var e error
-	DB, e = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
-	if e != nil {
-		panic(e)
-	}
-	InitMigration()
 }
+
+// type ConfigDB struct {
+// 	DB_Username string
+// 	DB_Password string
+// 	DB_Host     string
+// 	DB_Port     string
+// 	DB_Name     string
+// }
+
+// func InitDB() {
+// 	config := map[string]string{
+// 		"DB_Username": "root",
+// 		"DB_Password": "anggol2332prada",
+// 		"DB_Port":     "3306",
+// 		"DB_Host":     "localhost",
+// 		"DB_Name":     "pandu-wisata",
+// 	}
+
+// 	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+// 		config["DB_Username"],
+// 		config["DB_Password"],
+// 		config["DB_Host"],
+// 		config["DB_Port"],
+// 		config["DB_Name"])
+
+// 	var e error
+// 	DB, e = gorm.Open(mysql.Open(connectionString), &gorm.Config{})
+// 	if e != nil {
+// 		panic(e)
+// 	}
+// 	InitMigration()
+// }
 
 func InitLog() {
 	var err error

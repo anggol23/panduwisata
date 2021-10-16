@@ -5,6 +5,11 @@ import (
 	"mini-project/route"
 )
 
+// import (
+// 	"mini-project/config"
+// 	"mini-project/route"
+// )
+
 // 	// isValid := database.IsValid(user.Email, user.Password)
 // 	// if !isValid {
 // 	// 	return c.String(http.StatusBadRequest, "email atau password salah")

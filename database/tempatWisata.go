@@ -5,6 +5,11 @@ import (
 	"mini-project/model"
 )
 
+// import (
+// 	"mini-project/config"
+// 	"mini-project/model"
+// )
+
 // func GetAllTempatWisata() []model.TempatWisata {
 // 	var tempatWisata []model.TempatWisata
 // 	config.DB.Find(&tempatWisata).Joins("Category")

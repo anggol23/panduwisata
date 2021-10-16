@@ -5,6 +5,11 @@ import (
 	"mini-project/model"
 )
 
+// import (
+// 	"mini-project/config"
+// 	"mini-project/model"
+// )
+
 // func GetAllTransaction() []model.Transaction {
 // 	var transaction []model.Transaction
 // 	config.DB.Find(&transaction).Joins("User", "TempatWisata")
@@ -44,7 +49,7 @@ func GetTransactionByID(id string) model.Transaction {
 
 func CreateTransaction(transaction model.Transaction) model.Transaction {
 	config.DB.Create(&transaction)
-	config.DB.Where("transactions.id = ?", transaction.ID).Joins("TempatWisata").Joins("User").Find(&transaction)
+	config.DB.Where("transactions.id = ?", transaction.ID).Find(&transaction)
 	return transaction
 }
 

@@ -2,6 +2,8 @@ package model
 
 import "gorm.io/gorm"
 
+// import "gorm.io/gorm"
+
 type TempatWisata struct {
 	gorm.Model
 	ID         uint      `gorm:"primarykey"`
